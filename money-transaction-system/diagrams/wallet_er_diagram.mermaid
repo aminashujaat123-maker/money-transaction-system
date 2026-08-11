@@ -1,0 +1,64 @@
+erDiagram
+    USERS ||--o{ WALLETS : "owns"
+    WALLETS ||--o{ TRANSACTIONS : "sends (sender_wallet_id)"
+    WALLETS ||--o{ TRANSACTIONS : "receives (receiver_wallet_id)"
+    USERS ||--o{ OTP_VERIFICATIONS : "requests"
+    TRANSACTIONS ||--o{ OTP_VERIFICATIONS : "confirms"
+    USERS ||--o{ AUDIT_LOGS : "generates"
+
+    USERS {
+        bigint id PK
+        varchar full_name
+        varchar phone_number UK
+        varchar cnic UK
+        varchar email UK
+        varchar password_hash
+        varchar pin_hash
+        enum account_type
+        enum kyc_status
+        enum status
+        timestamp created_at
+    }
+
+    WALLETS {
+        bigint id PK
+        bigint user_id FK
+        varchar wallet_number UK
+        char currency
+        decimal balance
+        decimal daily_limit
+        enum status
+    }
+
+    TRANSACTIONS {
+        bigint id PK
+        varchar transaction_ref UK
+        enum type
+        bigint sender_wallet_id FK
+        bigint receiver_wallet_id FK
+        decimal amount
+        decimal fee
+        decimal total_amount
+        enum status
+        varchar description
+        timestamp created_at
+    }
+
+    OTP_VERIFICATIONS {
+        bigint id PK
+        bigint user_id FK
+        bigint transaction_id FK
+        varchar otp_code
+        enum purpose
+        boolean is_used
+        timestamp expires_at
+    }
+
+    AUDIT_LOGS {
+        bigint id PK
+        bigint user_id FK
+        varchar action
+        bigint reference_id
+        varchar ip_address
+        timestamp created_at
+    }
