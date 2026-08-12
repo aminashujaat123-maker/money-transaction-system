@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard · PakWallet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="screen">
+    <div class="topbar">
+      <div class="hello">Hi, <strong id="userName">...</strong></div>
+      <button class="logout-btn" id="logoutBtn">Log out</button>
+    </div>
+
+    <div class="wallet-card">
+      <div class="wallet-label">Available balance</div>
+      <div class="wallet-balance"><span>PKR</span><span id="balanceValue">0.00</span></div>
+      <div class="wallet-footer">
+        <span id="walletNumber">WLT0000000</span>
+        <span class="chip"></span>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <button class="action-btn" id="openDeposit">
+        <span class="action-icon">＋</span>
+        Add Money
+      </button>
+      <button class="action-btn" id="openTransfer">
+        <span class="action-icon">↗</span>
+        Send Money
+      </button>
+      <button class="action-btn" id="refreshBtn">
+        <span class="action-icon">⟳</span>
+        Refresh
+      </button>
+    </div>
+
+    <div class="section-title">Recent activity</div>
+    <div class="txn-list" id="txnList">
+      <div class="empty-state">Loading...</div>
+    </div>
+  </div>
+
+  <!-- Deposit modal -->
+  <div class="modal-overlay" id="depositOverlay">
+    <div class="modal">
+      <button class="modal-close" data-close="depositOverlay">✕</button>
+      <h2>Add Money</h2>
+      <div id="depositAlert" class="alert alert-error"></div>
+      <form id="depositForm">
+        <div class="field">
+          <label for="depositAmount">Amount (PKR)</label>
+          <input type="number" id="depositAmount" min="1" step="0.01" placeholder="1000" required />
+        </div>
+        <button type="submit" class="btn btn-primary" id="depositBtn">Add Money</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Transfer modal -->
+  <div class="modal-overlay" id="transferOverlay">
+    <div class="modal">
+      <button class="modal-close" data-close="transferOverlay">✕</button>
+      <h2>Send Money</h2>
+      <div id="transferAlert" class="alert alert-error"></div>
+      <form id="transferForm">
+        <div class="field">
+          <label for="receiverPhone">Recipient's phone number</label>
+          <input type="text" id="receiverPhone" placeholder="03001234567" required />
+        </div>
+        <div class="field">
+          <label for="transferAmount">Amount (PKR)</label>
+          <input type="number" id="transferAmount" min="1" step="0.01" placeholder="500" required />
+        </div>
+        <div class="field">
+          <label for="transferNote">Note (optional)</label>
+          <input type="text" id="transferNote" placeholder="e.g. Lunch money" />
+        </div>
+        <button type="submit" class="btn btn-primary" id="transferBtn">Send Money</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,54 +1,36 @@
-# Money Transaction System (Wallet Database)
+# PakWallet — Web App
 
-Ek mobile wallet transaction system ka database design — EasyPaisa / JazzCash jaisa — jo user-to-user transfers, cash deposits, withdrawals, aur bill payments handle karta hai.
+A simple EasyPaisa/JazzCash-style wallet UI built on top of the `wallet_transaction_system` MySQL database. Users can register, log in, add money to their own wallet, and send money to another registered user by phone number.
 
-## Features
+## What's included
 
-- User accounts with KYC status tracking
-- Wallet-based balance management (race-condition safe)
-- Transaction types: transfer, deposit, withdrawal, bill_payment, refund
-- OTP verification for secure transactions
-- Full audit logging
-- Extensible design (agent/merchant accounts easily add ho sakte hain)
-
-## Tech Stack
-
-- **Database:** MySQL 8.0+
-
-## Project Structure
-
-```
-money-transaction-system/
-├── database/
-│   └── wallet_transaction_system.sql   # Full schema + sample data
-├── diagrams/
-│   └── wallet_er_diagram.mermaid       # ER diagram
-└── README.md
-```
+- `backend/` — Node.js + Express API (login, register, deposit, transfer, transaction history)
+- `public/` — plain HTML/CSS/JS frontend (no build step needed)
 
 ## Setup
 
-1. MySQL Server install karein ([mysql.com/downloads](https://www.mysql.com/downloads/))
-2. MySQL Workbench ya VS Code (SQLTools extension) se connect karein
-3. `database/wallet_transaction_system.sql` file run karein
-4. Database `wallet_transaction_system` ban jayega, sample data ke saath
+1. Make sure your `wallet_transaction_system` database already exists (from `database/wallet_transaction_system.sql`).
+2. Open a terminal in the `backend` folder and install dependencies:
+   ```
+   npm install
+   ```
+3. Copy `.env.example` to `.env` and fill in your MySQL password:
+   ```
+   copy .env.example .env
+   ```
+4. Start the server:
+   ```
+   npm start
+   ```
+5. Open your browser at **http://localhost:3000**
 
-## Database Tables
+## How it works
 
-| Table | Purpose |
-|---|---|
-| `users` | Customer accounts, CNIC, KYC status |
-| `wallets` | Balance tracking per user |
-| `transactions` | Har money movement (transfer/deposit/withdrawal) |
-| `otp_verifications` | Transaction confirmation OTPs |
-| `audit_logs` | Security aur dispute resolution ke liye logs |
+- Registering creates a row in `users` and a matching row in `wallets` with a balance of 0.
+- "Add Money" inserts a `deposit` transaction and flips it to `completed`, which fires the database trigger that credits your wallet.
+- "Send Money" looks up the recipient by phone number and creates a `transfer` transaction between the two wallets, using the same trigger to move the balance.
+- All amounts are in PKR.
 
-## Roadmap
+## Try it with two accounts
 
-- [ ] Agent accounts (cash-in/cash-out points)
-- [ ] Backend API (Node.js/PHP)
-- [ ] Frontend app
-
-## License
-
-MIT
+Register two different accounts (use two different phone numbers), log in as the first, add money to it, then send some to the second account's phone number to see the transfer in action.

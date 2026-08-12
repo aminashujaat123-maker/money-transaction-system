@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Log In · PakWallet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="screen">
+    <div class="auth-wrap">
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div class="brand-name">PakWallet</div>
+      </div>
+
+      <h1 class="title">Welcome back</h1>
+      <p class="subtitle">Log in to send money and manage your wallet.</p>
+
+      <div id="alert" class="alert alert-error"></div>
+
+      <form id="loginForm">
+        <div class="field">
+          <label for="phone">Phone number</label>
+          <input type="text" id="phone" placeholder="03001234567" required />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required />
+        </div>
+        <button type="submit" class="btn btn-primary" id="loginBtn">Log In</button>
+      </form>
+
+      <div class="switch-link">Don't have an account? <a href="register.html">Sign up</a></div>
+    </div>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>
